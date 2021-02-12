@@ -25,33 +25,23 @@ public class ClienteService {
 
 
     public Object obterClientePorNome(String nome) {
-        List<Cliente> clientes = repository.findByNomeContaining(nome);
-        if(clientes.isEmpty()){
-            throw new ResourceNotFoundException(MSG_CLIENTE_NAO_ENCONTRADO_NOME + nome);
-        }
+        List<Cliente> clientes = repository.findByNomeContaining(nome).orElseThrow(() -> new ResourceNotFoundException(MSG_CLIENTE_NAO_ENCONTRADO_NOME + nome));
         return clientes;
     }
 
-    public Object obterClientePorId(Integer id) {
-        Optional<Cliente> cliente = repository.findById(id);
-        if(!cliente.isPresent()){
-            throw new ResourceNotFoundException(MSG_CLIENTE_NAO_ENCONTRADO_ID + id);
-        }
-        return cliente;
+    public Cliente obterClientePorId(Integer id) {
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(MSG_CLIENTE_NAO_ENCONTRADO_ID + id));
     }
 
 
     public void excluirClientePorId(Integer id) {
-        try {
-            repository.deleteById(id);
-        } catch (EmptyResultDataAccessException ex) {
-            throw new ResourceNotFoundException(MSG_CLIENTE_NAO_ENCONTRADO_ID + id);
-        }
+        repository.delete(obterClientePorId(id));
     }
 
-    public Cliente alterarNomeClientePorId(Integer id, String nome) {
-        Optional<Cliente> cliente = repository.findById(id);;
-        cliente.get().setNome(nome);
-        return repository.save(cliente.get());
+    public Cliente alterarNomeClientePorId(Integer id, String nome) throws ResourceNotFoundException {
+        Cliente cliente = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(MSG_CLIENTE_NAO_ENCONTRADO_ID + id));
+        cliente.setNome(nome);
+        return repository.save(cliente);
     }
+
 }

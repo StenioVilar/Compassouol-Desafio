@@ -45,22 +45,22 @@ public class ClienteController {
 
     @ApiOperation(value = "Obtem um cliente pelo id",notes = "Endpoint responsável por buscar um cliente único pelo ID")
     @GetMapping(value = "/id", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> obterClientePorId(@RequestParam(value="id")
+    public ResponseEntity<Cliente> obterClientePorId(@RequestParam(value="id")
                                                  @ApiParam(value = "Id do Cliente") Integer id) {
-        return new ResponseEntity<>(service.obterClientePorId(id), HttpStatus.OK);
+        return new ResponseEntity<Cliente>(service.obterClientePorId(id), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Excluir um cliente pelo id",notes = "Endpoint responsável por excluir um cliente pelo ID")
-    @DeleteMapping(value = "/id", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> excluirClientePorId(@RequestParam(value="id")
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> excluirClientePorId(@PathVariable(value="id")
                                                @ApiParam(value = "Id do Cliente") Integer id) {
         service.excluirClientePorId(id);
-        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 
     @ApiOperation(value = "Alterar o nome de um cliente pelo id",notes = "Endpoint responsável por alterar o nome de um cliente pelo id")
-    @PatchMapping(value = "/id", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> alterarNomeClientePorId(@RequestParam(value="id")
+    @PatchMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> alterarNomeClientePorId(@PathVariable(value="id")
                                                          @ApiParam(value = "Id do Cliente") Integer id,
                                                          @RequestBody ClienteMudancaNomeDTO clienteDTO) {
         return new ResponseEntity<>(service.alterarNomeClientePorId(id,clienteDTO.getNome()), HttpStatus.OK);

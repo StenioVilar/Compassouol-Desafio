@@ -37,20 +37,23 @@ public class CidadeServiceTest {
     private MockMvc mockMvc;
 
     @Test
-    public void testarBuscarCidadesPorNome_OK() throws Exception {
+    public void testarBuscarCidadesPorNome_200() throws Exception {
 
         List<Cidade> cidades = Arrays.asList(
                 new Cidade(1, "Nome Cidade", "DF"),
                 new Cidade(2, "Nome Cidade", "RJ"));
 
-        when(cidadeRepository.findByNomeContaining("Nome Cidade")).thenReturn(cidades);
+        when(cidadeRepository.findByNomeContaining("Nome Cidade")).thenReturn(java.util.Optional.of(cidades));
 
-        mockMvc.perform(get("/cidade/nome?nome=Nome"))
+        mockMvc.perform(get("/cidade/nome?nome=Nome Cidade"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.idCidade", is(1)))
-                .andExpect(jsonPath("$.nome", is("Nome Cidade")))
-                .andExpect(jsonPath("$.siglaEstado", is("DF")));
+                .andExpect(jsonPath("$[0].idCidade", is(1)))
+                .andExpect(jsonPath("$[0].nome", is("Nome Cidade")))
+                .andExpect(jsonPath("$[0].siglaEstado", is("DF")))
+                .andExpect(jsonPath("$[1].idCidade", is(2)))
+                .andExpect(jsonPath("$[1].nome", is("Nome Cidade")))
+                .andExpect(jsonPath("$[1].siglaEstado", is("RJ")));
 
         verify(cidadeRepository, times(1)).findByNomeContaining("Nome Cidade");
     }
@@ -66,7 +69,7 @@ public class CidadeServiceTest {
     }
 
     @Test
-    public void salvarCidade_OK() throws Exception {
+    public void salvarCidade_201() throws Exception {
 
         Cidade cidade = new Cidade(1, "Nome Cidade", "DF");
         CidadeDTO cidadeDTO = new CidadeDTO("Nome Cidade", "DF");
@@ -82,7 +85,5 @@ public class CidadeServiceTest {
         verify(cidadeRepository, times(1)).save(any(Cidade.class));
 
     }
-
-
 
 }
