@@ -36,7 +36,7 @@ public class ClienteController {
         return new ResponseEntity<>(service.salvarCliente(cliente), HttpStatus.CREATED);
     }
 
-    @ApiOperation(value = "Obtem um cliente pelo nome",notes = "Endpoint responsável buscar um cliente por uma parte do nome")
+    @ApiOperation(value = "Obtem um cliente por parte do nome",notes = "Endpoint responsável buscar um cliente por uma parte do nome")
     @GetMapping(value = "/nome/{nome}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> obterClientePorNome(@PathVariable(value="nome")
                                                 @ApiParam(value = "Nome do Cliente") String nome) {

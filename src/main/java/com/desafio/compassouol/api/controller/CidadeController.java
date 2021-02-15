@@ -31,7 +31,7 @@ public class CidadeController {
         return new ResponseEntity<>(service.salvarCidade(cidade), HttpStatus.CREATED);
     }
 
-    @ApiOperation(value = "Obtem uma cidade pelo nome",notes = "Endpoint responsável por buscar uma cidade por parte do nome")
+    @ApiOperation(value = "Obtem uma cidade por parte do nome",notes = "Endpoint responsável por buscar uma cidade por parte do nome")
     @GetMapping(value = "/nome/{nome}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> obterCidadePorNome(@PathVariable(value="nome")
                                                     @ApiParam(value = "Nome da cidade") String nome) {
