@@ -24,8 +24,11 @@ public class ClienteService {
     }
 
 
-    public Object obterClientePorNome(String nome) {
-        List<Cliente> clientes = repository.findByNomeContaining(nome).orElseThrow(() -> new ResourceNotFoundException(MSG_CLIENTE_NAO_ENCONTRADO_NOME + nome));
+    public List<Cliente> obterClientePorNome(String nome) {
+        List<Cliente> clientes = repository.findByNomeContaining(nome);
+        if(clientes.isEmpty()){
+            throw new ResourceNotFoundException(MSG_CLIENTE_NAO_ENCONTRADO_NOME + nome);
+        }
         return clientes;
     }
 

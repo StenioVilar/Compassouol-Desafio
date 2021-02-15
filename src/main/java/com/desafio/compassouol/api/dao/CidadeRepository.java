@@ -8,8 +8,8 @@ import java.util.Optional;
 
 public interface CidadeRepository extends JpaRepository<Cidade, Integer> {
 
-	Optional<List<Cidade>> findByNomeContaining(String nome);
+	List<Cidade> findByNomeContaining(String nome);
 
-	Optional<List<Cidade>> findBySiglaEstado(String sgEstado);
+	List<Cidade> findBySiglaEstado(String sgEstado);
 
 }

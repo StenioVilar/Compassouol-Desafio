@@ -22,12 +22,18 @@ public class CidadeService {
     }
 
     public List<Cidade> obterCidadePorNome(String nome) {
-        List<Cidade> cidades = repository.findByNomeContaining(nome).orElseThrow(() -> new ResourceNotFoundException(MSG_CIDADE_NAO_ENCONTRADA_NOME + nome));
+        List<Cidade> cidades = repository.findByNomeContaining(nome);
+        if(cidades.isEmpty()){
+            throw new ResourceNotFoundException(MSG_CIDADE_NAO_ENCONTRADA_NOME + nome);
+        }
         return cidades;
     }
 
     public Object obterCidadePorEstado(String sgEstado) {
-        List<Cidade> cidades = repository.findBySiglaEstado(sgEstado).orElseThrow(() -> new ResourceNotFoundException(MSG_CIDADE_NAO_ENCONTRADA_ESTADO + sgEstado));
+        List<Cidade> cidades = repository.findBySiglaEstado(sgEstado);
+        if(cidades.isEmpty()){
+            throw new ResourceNotFoundException(MSG_CIDADE_NAO_ENCONTRADA_ESTADO + sgEstado);
+        }
         return cidades;
     }
 

@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 
-    Optional<List<Cliente>> findByNomeContaining(String nome);
+    List<Cliente> findByNomeContaining(String nome);
 
 }

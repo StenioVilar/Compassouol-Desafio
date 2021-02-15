@@ -43,9 +43,9 @@ public class CidadeServiceTest {
                 new Cidade(1, "Nome Cidade", "DF"),
                 new Cidade(2, "Nome Cidade", "RJ"));
 
-        when(cidadeRepository.findByNomeContaining("Nome Cidade")).thenReturn(java.util.Optional.of(cidades));
+        when(cidadeRepository.findByNomeContaining("Nome Cidade")).thenReturn(cidades);
 
-        mockMvc.perform(get("/cidade/nome?nome=Nome Cidade"))
+        mockMvc.perform(get("/cidade/nome/Nome Cidade"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].idCidade", is(1)))

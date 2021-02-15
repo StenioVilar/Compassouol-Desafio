@@ -32,15 +32,15 @@ public class CidadeController {
     }
 
     @ApiOperation(value = "Obtem uma cidade pelo nome",notes = "Endpoint responsável por buscar uma cidade por parte do nome")
-    @GetMapping(value = "/nome", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> obterCidadePorNome(@RequestParam(value="nome")
+    @GetMapping(value = "/nome/{nome}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> obterCidadePorNome(@PathVariable(value="nome")
                                                     @ApiParam(value = "Nome da cidade") String nome) {
         return new ResponseEntity<>(service.obterCidadePorNome(nome), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Obtem uma cidade pelo estado",notes = "Endpoint responsável por buscar uma cidade pelo estado")
-    @GetMapping(value = "/estado", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> obterCidadePorEstado(@RequestParam(value="siglaEstado")
+    @GetMapping(value = "/estado/{sgEstado}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> obterCidadePorEstado(@PathVariable(value="sgEstado")
                                                 @ApiParam(value = "Sigla do Estado") String sgEstado) {
         return new ResponseEntity<>(service.obterCidadePorEstado(sgEstado), HttpStatus.OK);
     }

@@ -16,7 +16,7 @@ import lombok.Setter;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ClienteMudancaNomeDTO {
 
-    @ApiModelProperty(example = "Luiz Fernando da Silva")
+    @ApiModelProperty(example = "Stenio da Silva")
     private String nome;
 
 }

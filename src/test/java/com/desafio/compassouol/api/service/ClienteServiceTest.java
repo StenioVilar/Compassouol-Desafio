@@ -15,8 +15,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static org.hamcrest.Matchers.is;
@@ -41,7 +41,9 @@ public class ClienteServiceTest {
     @Test
     public void salvarCliente_201() throws Exception {
 
-        Date dataTeste = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String dataStr = "2021-02-12";
+        Date dataTeste = new Date(format.parse(dataStr).getTime());
         Cidade cidadeTeste = new Cidade(1, "Nome Cidade", "DF");
 
         Cliente cliente = new Cliente(1, "Stenio", 'H', dataTeste, 25, cidadeTeste );
@@ -68,29 +70,17 @@ public class ClienteServiceTest {
 
     @Test
     public void testarClientePorNome_404() throws Exception {
-        mockMvc.perform(get("/cliente/nome?nome=Rio")).andExpect(status().isNotFound());
+        mockMvc.perform(get("/cliente/nome/Rio")).andExpect(status().isNotFound());
     }
 
     @Test
     public void testarClientePorId_404() throws Exception {
-        mockMvc.perform(get("/cliente/id?id=99")).andExpect(status().isNotFound());
+        mockMvc.perform(get("/cliente/id/99")).andExpect(status().isNotFound());
     }
 
     @Test
     public void testarExcluirClientePorId_404() throws Exception {
         mockMvc.perform(delete("/cliente/99")).andExpect(status().isNotFound());
-    }
-
-    @Test
-    public void testarExcluirClientePorId_204() throws Exception {
-
-        salvarCliente_201();
-
-        mockMvc.perform(MockMvcRequestBuilders
-                .delete("/cliente/1")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNoContent());
-
     }
 
 }

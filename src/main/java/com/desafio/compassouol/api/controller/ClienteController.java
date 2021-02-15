@@ -37,15 +37,15 @@ public class ClienteController {
     }
 
     @ApiOperation(value = "Obtem um cliente pelo nome",notes = "Endpoint responsável buscar um cliente por uma parte do nome")
-    @GetMapping(value = "/nome", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> obterClientePorNome(@RequestParam(value="nome")
+    @GetMapping(value = "/nome/{nome}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> obterClientePorNome(@PathVariable(value="nome")
                                                 @ApiParam(value = "Nome do Cliente") String nome) {
         return new ResponseEntity<>(service.obterClientePorNome(nome), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Obtem um cliente pelo id",notes = "Endpoint responsável por buscar um cliente único pelo ID")
-    @GetMapping(value = "/id", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Cliente> obterClientePorId(@RequestParam(value="id")
+    @GetMapping(value = "/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Cliente> obterClientePorId(@PathVariable(value="id")
                                                  @ApiParam(value = "Id do Cliente") Integer id) {
         return new ResponseEntity<Cliente>(service.obterClientePorId(id), HttpStatus.OK);
     }
